@@ -1,0 +1,20 @@
+{
+  "name": "hangman",
+  "version": "1.0.0",
+  "description": "",
+  "main": "main.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gentian-ai/hangman.git"
+  },
+  "author": "Gentian",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/gentian-ai/hangman/issues"
+  },
+  "homepage": "https://github.com/gentian-ai/hangman#readme"
+}
