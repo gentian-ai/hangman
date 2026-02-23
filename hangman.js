@@ -1,24 +1,19 @@
 import { createInterface } from 'node:readline';
 
-const rl = createInterface({
-    input: process.stdin,
-    output: process.stdout
-});
-
-const words = ["apfel", "baum", "computer", "dach", "elefant", "fahrrad", "gitarre", "haus", "insel", "jacke",
-    "kaffee", "lampe", "maus", "nase", "ozean", "papier", "qualle", "radio", "sonne", "tisch",
-    "uhr", "vogel", "wald", "xylophon", "yacht", "zebra", "ameise", "besen", "clown", "drache",
-    "eis", "frosch", "garten", "honig", "igel", "junge", "keks", "loewe", "mond", "nacht",
-    "onkel", "park", "qualitaet", "reis", "schuh", "tiger", "uhu", "vase", "wolke", "zug",
-    "anker", "brot", "couch", "daumen", "eimer", "finger", "gabel", "hammer", "idol", "joghurt",
-    "krone", "lippe", "messer", "nadel", "oper", "pinsel", "quark", "ritter", "sessel", "tasse",
-    "ufer", "vulkan", "wiese", "zange", "abend", "blitz", "chaos", "delfin", "erde", "feuer",
-    "geist", "himmel", "imbiss", "juwel", "krieger", "licht", "motor", "nuss", "opa", "pfeil",
-    "quelle", "rauch", "stern", "traum", "urlaub", "ventil", "wueste", "zwerg", "axt", "boot"];
+const words = ["Apfel", "Baum", "Computer", "Dach", "Elefant", "Fahrrad", "Gitarre", "Haus", "Insel", "Jacke",
+    "Kaffee", "Lampe", "Maus", "Nase", "Ozean", "Papier", "Qualle", "Radio", "Sonne", "Tisch",
+    "Uhr", "Vogel", "Wald", "Xylophon", "Yacht", "Zebra", "Ameise", "Besen", "Clown", "Drache",
+    "Eis", "Frosch", "Garten", "Honig", "Igel", "Junge", "Keks", "Loewe", "Mond", "Nacht",
+    "Onkel", "Park", "Qualitaet", "Reis", "Schuh", "Tiger", "Uhu", "Vase", "Wolke", "Zug",
+    "Anker", "Brot", "Couch", "Daumen", "Eimer", "Finger", "Gabel", "Hammer", "Idol", "Joghurt",
+    "Krone", "Lippe", "Messer", "Nadel", "Oper", "Pinsel", "Quark", "Ritter", "Sessel", "Tasse",
+    "Ufer", "Vulkan", "Wiese", "Zange", "Abend", "Blitz", "Chaos", "Delfin", "Erde", "Feuer",
+    "Geist", "Himmel", "Imbiss", "Juwel", "Krieger", "Licht", "Motor", "Nuss", "Opa", "Pfeil",
+    "Quelle", "Rauch", "Stern", "Traum", "Urlaub", "Ventil", "Wueste", "Zwerg", "Axt", "Boot"];
 
 const random = Math.floor(Math.random() * words.length);
 let mistakes = 0;
-let word = words[random];
+const word = words[random];
 let guess = [];
 const mask = "_ ".repeat(word.length);
 
@@ -26,9 +21,9 @@ const mask = "_ ".repeat(word.length);
 
 function showWord() {
     let show = "";
-    for (let buchstabe of word) {
-        if (guess.includes(buchstabe)) {
-            show += buchstabe + " ";
+    for (let letter of word) {
+        if (guess.includes(letter.toLowerCase())) {
+            show += letter + " ";
         } else {
             show += "_ ";
         }
@@ -37,34 +32,52 @@ function showWord() {
 }
 
 
-function spiel (text) {
-    rl.question(text, (buchstabe) => {
-        guess.push(buchstabe);
+function game(text) {
+    const rl = createInterface({
+        input: process.stdin,
+        output: process.stdout
+    });
+
+    // Wir nennen die Antwort vom User hier "input"
+    rl.question(text, (input) => {
+        rl.close();
+        const letter = input.toLowerCase();
+
+        if (letter.length !== 1 || letter < 'a' || letter > 'z') {
+            console.log("Ungültig! Bitte nur einen Buchstaben (A-Z) eingeben.");
+            game("Versuch es nochmal: ");
+            return;
+        }
+        guess.push(letter);
         const aktuelleAnzeige = showWord();
         console.log(aktuelleAnzeige);
 
-        if (!showWord().includes("_")) {
-            console.log("GLÜCKWUNSCH! Du hast das Wort erraten!");
-            rl.close();
-            return;
+        let check = ""; 
+        for (let l of word) {
+            if (guess.includes(l.toLowerCase())) {
+                check += l; // Buchstabe wurde gefunden
+            }   
         }
-        if (word.includes(buchstabe)) {
-            spiel("Richtig! Der Buchstabe ist dabei! Weiter geht es!");
-        }
-        else {
-            mistakes++;
-        }
-        if (mistakes === 10) {
-            console.log(`Du hast leider keine Versuche mehr. Es war ${word}. Viel Erfolg beim nächsten mal!`)
-            rl.close()
-        }
-        else {
-            spiel(`Falsch. Der Buchstabe ist nicht dabei. Du kannst nur noch ${10 - mistakes} Fehler machen.`)
-        }
-    })
-}
 
+    
+        if (check === word) {
+            console.log("GLÜCKWUNSCH! Du hast das Wort erraten!");
+            return; // Spiel hier beenden
+        }
+
+        if (word.toLowerCase().includes(letter)) {
+            game("Richtig! Weiter gehts: ");
+        } else {
+            mistakes++;
+            if (mistakes === 10) {
+                console.log(`Verloren! Es war: ${word}`);
+            } else {
+                game(`Falsch! Noch ${10 - mistakes} Versuche: `);
+            }
+        }
+    });
+}
     //console.log(word)
 
 console.log(mask)
-spiel("Welchen Buchstaben rätst du?")
+game("Welchen Buchstaben rätst du?")
