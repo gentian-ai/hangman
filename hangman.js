@@ -34,7 +34,7 @@ function checkWin(){
 let check = ""; 
 for (let l of word) {
     if (guess.includes(l.toLowerCase())) {
-        check += l; // Buchstabe wurde gefunden
+        check += l; 
     }   
 }
 return check === word;
@@ -46,7 +46,7 @@ function game(text) {
         output: process.stdout
     });
 
-    // Wir nennen die Antwort vom User hier "input"
+   
     rl.question(text, (input) => {
         rl.close();
         const letter = input.toLowerCase();
@@ -65,7 +65,7 @@ function game(text) {
     
         if (checkWin()) {
             console.log("GLÜCKWUNSCH! Du hast das Wort erraten!");
-            return; // Spiel hier beenden
+            return; 
         }
 
         if (word.toLowerCase().includes(letter)) {
