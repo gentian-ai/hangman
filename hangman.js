@@ -15,7 +15,6 @@ const random = Math.floor(Math.random() * words.length);
 let mistakes = 0;
 const word = words[random];
 let guess = [];
-const mask = "_ ".repeat(word.length);
 
 
 
@@ -48,7 +47,7 @@ export function game(text) {
         output: process.stdout
     });
 
-    // Wir nennen die Antwort vom User hier "input"
+   
     rl.question(text, (input) => {
         rl.close();
         const letter = input.toLowerCase();
@@ -58,21 +57,16 @@ export function game(text) {
             game("Versuch es nochmal: ");
             return;
         }
+
         guess.push(letter);
         const aktuelleAnzeige = showWord();
         console.log(aktuelleAnzeige);
 
-        let check = ""; 
-        for (let l of word) {
-            if (guess.includes(l.toLowerCase())) {
-                check += l; // Buchstabe wurde gefunden
-            }   
-        }
-
+        
     
-        if (check === word) {
+        if (checkWin()) {
             console.log("GLÜCKWUNSCH! Du hast das Wort erraten!");
-            return; // Spiel hier beenden
+            return; 
         }
 
         if (word.toLowerCase().includes(letter)) {
@@ -87,7 +81,5 @@ export function game(text) {
         }
     });
 }
-    //console.log(word)
 
-//console.log(mask)
-//game("Welchen Buchstaben rätst du?")
+

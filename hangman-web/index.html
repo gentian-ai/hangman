@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+body {background-color: rgb(95, 202, 228);}
+.letter-slot {padding:5px}
+/* h1 {color: white} */
+button {background-color: crimson; 
+        color: white}
+
+span {text-decoration: underline red;}
+
+</style>
+</head>
+<body>
+    <!-- Das ist dein Terminal-Ersatz -->
+    <!-- <h1 id="statusText">Genti</h1> -->
+
+    <div id="word-box">
+        <span>A</span>
+        <span>_</span>
+        <span>t</span>
+    </div>
+
+    <div class="controls">
+        <input type="text" id="user-input">
+        <button id="action-btn">Aufgeben</button>
+    </div>
+
+    <p id="response"></p>
+
+    <p>Bereits versucht: <span id="letters-used"></span></p>
+
+    <p>Fehler: <span id="mistakes-count"></span></p>
+
+    <script src="script.js"></script>
+</body>
+</html>

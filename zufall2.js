@@ -2,14 +2,11 @@ import * as readline from 'node:readline/promises';
 const random = Math.floor(Math.random() * 11);
 const max = 3
 
-// console.log(random)
-
-const rl = readline.createInterface({
-    input: process.stdin,
-    output: process.stdout
-});
-
 async function game() {
+    const rl = readline.createInterface({
+        input: process.stdin,
+        output: process.stdout
+    });
     console.log("Willkommen beim Zahlenraten. Du hast nur 3 Versuche und somit keine Chance!")
     for (let i = 1; i <= max; i++) {
         const answer = await rl.question("Rate eine Zahl von 1 bis 10: ")
@@ -42,4 +39,4 @@ async function game() {
     rl.close()
 }
 
-game()
+game();
