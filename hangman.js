@@ -19,7 +19,7 @@ const mask = "_ ".repeat(word.length);
 
 
 
-function showWord() {
+export function showWord() {
     let show = "";
     for (let letter of word) {
         if (guess.includes(letter.toLowerCase())) {
@@ -31,8 +31,18 @@ function showWord() {
     return show;
 }
 
+export function checkWin(){
+let check = ""; 
+for (let l of word) {
+    if (guess.includes(l.toLowerCase())) {
+        check += l; 
+    }   
+}
+return check === word;
+}
 
-function game(text) {
+
+export function game(text) {
     const rl = createInterface({
         input: process.stdin,
         output: process.stdout
@@ -79,5 +89,5 @@ function game(text) {
 }
     //console.log(word)
 
-console.log(mask)
-game("Welchen Buchstaben rätst du?")
+//console.log(mask)
+//game("Welchen Buchstaben rätst du?")
